@@ -1,0 +1,93 @@
+en:
+  ricer4:
+    plug:
+      params:
+        closed_question:
+          err_not_closed: 'This poll or question is not closed yet.'
+        open_question: 
+          err_not_open: 'This poll or question is already closed.'
+
+    plugins:
+      poll:
+        
+        type_1: 'Poll'
+        type_2: 'Choice'
+        type_3: 'Rating'
+        type_4: 'Question'
+
+        outcome_none: 'There has not been a single vote.'
+        outcome_question: 'URI not available anymore' # TODO: Save Pastie ID needed + Accepted answers
+        outcome_partial: '%{number}-"%{choice}"(%{times}/%{percent})'
+        outcome_rating:
+          one: '%{rating} with %{count} vote'
+          other: '%{rating} with %{count} votes'
+        
+        err_no_options: 'You have to supply at least 2 options.'
+        msg_created: "Your %{type} was published to %{channelcount} channels and %{usercount} users. Close with \x02%{tc}\x02. Lifetime: %{max_age}."
+
+        list_item: '%{number}-(%{type})%{question}'
+
+        close:
+          trigger: 'poll.close'
+          description: 'close a poll and announce results. Polls are automatically closed after some time.'
+          err_not_allowed: 'You are not allowed to close this poll yet. It will automatically close after some time.'
+          msg_closed: 'You have closed %{type} %{qid}: "%{question}" by %{asker}. The results are to be announced.'
+          msg_poll_closed: "%{type}#%{qid} - \"%{question}\" by %{asker} is now \x02closed\x02: %{outcome}"
+          paste_title: '%{type}#%{qid} - "%{question}" by %{asker} - %{date}'
+          paste_message: "%{type}#%{qid} - \"%{question}\" by %{asker} is now \x02closed\x02: %{url}"
+
+        newpoll:
+          trigger: 'poll.choose'
+          usage: '<..question text..|..answer1..|..answer2..|..answerN..>'
+          description: 'Create a new poll to get it announced and voted on all poll active channels.'
+          msg_announce: "%{user} has created a poll: \"%{question}\". Possible answers: %{choices}. Vote with: \x02%{ta} <answer>\x02."
+
+        newpollm:
+          trigger: 'poll.choices'
+          usage: '<..question text..|..option1..|..option2..|..optionN..>'
+          description: 'Create a new multiple choice poll to get it announced and voted on all poll active channels.'
+          msg_announce: "%{user} has created a multiple choice poll: \"%{question}\". Options: %{choices}. Multiple choice like this: \x02%{ta} 1,2\x02."
+
+        newpollr:
+          trigger: 'poll.rate'
+          description: 'Create a hot or not question which can be rated with 1-10.'
+          msg_announce: "%{user} plays hot or not?! \"%{question}\" - Vote with: \x02%{ta} (%{min}–%{max})\x02."
+          
+        newpollq:
+          trigger: 'poll.ask'
+          description: 'Create a new question poll to get it announced and answered on all poll active channels.'
+          msg_announce: "%{user} asks the irc: \"%{question}\". You can reply to him freely via: \x02%{ta} <..your..answer..here..>\x02."
+          
+        newpolls:
+          trigger: 'poll.current'
+          description: 'List and search all open polls and unanswered questions.'
+
+        poll:
+          trigger: 'poll'
+          description: 'Subscribe to new popping up polls and questions in this channel or privately.'
+          
+        polls:
+          trigger: 'poll.list'
+          description: 'List and search all closed polls and answered questions.'
+          
+        showpoll:
+          trigger: 'poll.show'
+          description: 'Show details for a poll or question.'
+          msg_show_closed: "%{type} %{number} by %{asker} from %{date} - \"%{question}\": %{outcome}."
+          msg_show_open:
+            one: "%{type} %{number} by %{asker} is still open, %{time_left} left. \"%{question}\" got %{count} vote so far."
+            other: "%{type} %{number} by %{asker} is still open, %{time_left} left. \"%{question}\" got %{count} votes so far."
+
+        vote:
+          trigger: 'poll.vote'
+          description: 'Vote a poll or answer a question.'
+          err_cheating: 'You have been caught cheating or share the network with a user. Maybe you meant another poll or question?'
+          err_answer_self: 'You cannot answer your own questions or polls.'
+          err_answer_twice: 'You already have answered this question.'
+          err_rate_range: 'You have to vote with an integer between %{min} and %{max}.'
+          err_no_choice: 'You have to choose at least one option.'
+          err_no_multi: 'You may maximally choose one option.'
+          err_invalid_choice: 'Please choose only valid options between %{min} and %{max}.'
+          msg_freetext_answer: '%{answerer} has replied to "%{question}": "%{answer}".'
+          msg_vote_counted: 'Your vote has been counted.'
+          msg_vote_received: 'There has been a vote for %{type} %{qid} - "%{question}" - on %{server}.'
